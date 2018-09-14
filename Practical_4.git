@@ -16,11 +16,18 @@ def callback1(channel): # reset
                 t = 2
         elif t == 2:
                 t = 0.5
-                
+
+def callback3(channel): # stop
+        global stopFlag # false = stop
+        global n
+        n=0
+        if stopFlag == False: stopFlag = True
+        elif stopFlag == True: stopFlag = False
+
 # Under a falling-edge detection, regardless of current execution
 # callback function will be called
 GPIO.add_event_detect(resetSwitch, GPIO.FALLING, callback=callback1,bouncetime=200)
 GPIO.add_event_detect(freqSwitch, GPIO.FALLING, callback=callback2,bouncetime=200)
-
+GPIO.add_event_detect(stopSwitch, GPIO.RISING, callback=callback3,bouncetime=200)
 
  print ('{0:>8} | {1:>8} | {2:>5} | {3:>5} | {4:>4}'.format(*names))
